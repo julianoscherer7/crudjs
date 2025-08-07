@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário Moderno - Sistema CRUD</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+     Debug Info 
+    <div id="debug-info" style="position: fixed; top: 10px; right: 10px; background: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 9999; font-size: 12px;">
+        <strong>🔍 Debug:</strong><br>
+        Status: <span id="connection-status">Testando...</span><br>
+        API: <span id="api-status">Verificando...</span>
+    </div>
+
+     Header 
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <h1>Inventário Moderno</h1>
+            </div>
+            <nav class="nav">
+                <button class="btn-primary" onclick="openModal()">
+                    <i class="fas fa-plus"></i>
+                    Novo Item
+                </button>
+            </nav>
+        </div>
+    </header>
+
+     Main Content 
+    <main class="main">
+        <div class="container">
+             Status da Conexão 
+            <div id="connection-alert" class="alert" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="connection-message"></span>
+            </div>
+
+             Filtros 
+            <section class="filters">
+                <div class="filter-group">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="filtroNome" placeholder="Buscar por nome..." onkeyup="filtrarItens()">
+                    </div>
+                    <select id="filtroTipo" onchange="filtrarItens()">
+                        <option value="">Todos os tipos</option>
+                        <option value="Eletrônicos">Eletrônicos</option>
+                        <option value="Periféricos">Periféricos</option>
+                        <option value="Acessórios">Acessórios</option>
+                        <option value="Armazenamento">Armazenamento</option>
+                        <option value="Áudio">Áudio</option>
+                    </select>
+                </div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <i class="fas fa-boxes"></i>
+                        <div>
+                            <span class="stat-number" id="totalItens">0</span>
+                            <span class="stat-label">Total de Itens</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             Lista de Itens 
+            <section class="items-grid" id="itemsGrid">
+                 Itens serão carregados aqui 
+            </section>
+
+             Loading 
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Carregando itens...</p>
+            </div>
+        </div>
+    </main>
+
+     Modal 
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Novo Item</h2>
+                <button class="btn-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="modal-body" id="itemForm">
+                <div class="form-group">
+                    <label for="nome">Nome do Item</label>
+                    <input type="text" id="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <select id="tipo" required>
+                        <option value="">Selecione um tipo</option>
+                        <option value="Eletrônicos">Eletrônicos</option>
+                        <option value="Periféricos">Periféricos</option>
+                        <option value="Acessórios">Acessórios</option>
+                        <option value="Armazenamento">Armazenamento</option>
+                        <option value="Áudio">Áudio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" id="quantidade" min="0" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+     Toast Notifications 
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="assets/script.js"></script>
+</body>
+</html>
